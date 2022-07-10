@@ -7,13 +7,15 @@ import 'bit_text.dart';
 import 'icon_and_text_widget.dart';
 
 class ProductSmallDetails extends StatelessWidget {
-  const ProductSmallDetails({super.key});
+  final String text;
+  const ProductSmallDetails({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       BigText(
-        text: 'Burger Meals',
+        text: text,
+        size: Dimensions.font26,
       ),
       SizedBox(
         height: Dimensions.height10,

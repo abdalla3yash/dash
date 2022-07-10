@@ -1,0 +1,16 @@
+{
+    "workbench.quickOpen.preserveInput": false,
+    "workbench.activityBar.iconClickBehavior": "toggle",
+    "workbench.activityBar.visible": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.tree.expandMode": "singleClick",
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.view.alwaysShowHeaderActions": true,
+    "breadcrumbs.icons": true,
+    "breadcrumbs.symbolSortOrder": "position",
+    "workbench.editor.defaultBinaryEditor": "",
+    "workbench.editor.enablePreviewFromCodeNavigation": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.highlightModifiedTabs": false,
+    "workbench.editor.labelFormat": "default"
+}

@@ -6,12 +6,14 @@ class SmallText extends StatelessWidget {
   Color? color;
   final String? text;
   double size, height;
+  int maxLines;
 
   SmallText({
     super.key,
     this.color = AppColors.textColor,
     this.text,
     this.size = 12,
+    this.maxLines = 200,
     this.height = 1.2,
   });
 
@@ -19,7 +21,12 @@ class SmallText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text!,
-      style: TextStyle(color: color, height: height, fontSize: size),
+      maxLines: maxLines,
+      style: TextStyle(
+        color: color,
+        height: height,
+        fontSize: size,
+      ),
     );
   }
 }
