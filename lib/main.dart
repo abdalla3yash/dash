@@ -1,3 +1,4 @@
+import 'package:dash/controllers/cart_controller.dart';
 import 'package:dash/controllers/popular_product_controller.dart';
 import 'package:dash/controllers/recommend_product_controller.dart';
 import 'package:dash/pages/food/popular_food_details.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.find<PopularProductController>().getPopularProductList();
     Get.find<RecommendProductController>().getRecommendProductList();
+    Get.find<CartController>();
 
     return GetMaterialApp(
       title: 'dash',
