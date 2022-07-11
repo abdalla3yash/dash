@@ -1,3 +1,4 @@
+import 'package:dash/controllers/popular_product_controller.dart';
 import 'package:dash/controllers/recommend_product_controller.dart';
 import 'package:dash/utils/app_constant.dart';
 import 'package:dash/utils/colors.dart';
@@ -8,6 +9,8 @@ import 'package:dash/widgets/exandable_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/cart_controller.dart';
+
 class RecommendedFoodDetails extends StatelessWidget {
   final int pageId;
 
@@ -17,6 +20,8 @@ class RecommendedFoodDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var product =
         Get.find<RecommendProductController>().recommendProductList[pageId];
+    Get.find<PopularProductController>()
+        .initProduct(product, Get.find<CartController>());
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -32,7 +37,37 @@ class RecommendedFoodDetails extends StatelessWidget {
                       Get.back();
                     },
                     child: AppIcon(icon: Icons.clear)),
-                AppIcon(icon: Icons.shopping_cart_outlined)
+                GetBuilder<PopularProductController>(builder: (controller) {
+                  return Stack(
+                    children: [
+                      AppIcon(icon: Icons.shopping_cart_outlined),
+                      Get.find<PopularProductController>().totalItems >= 1
+                          ? Positioned(
+                              right: 0,
+                              top: 0,
+                              child: AppIcon(
+                                icon: Icons.circle,
+                                size: 20,
+                                iconColor: Colors.transparent,
+                                backgroundColor: AppColors.mainColor,
+                              ),
+                            )
+                          : Container(),
+                      Get.find<PopularProductController>().totalItems >= 1
+                          ? Positioned(
+                              right: 5,
+                              top: 5,
+                              child: BigText(
+                                text: Get.find<PopularProductController>()
+                                    .totalItems
+                                    .toString(),
+                                size: 12,
+                                color: Colors.white,
+                              ))
+                          : Container(),
+                    ],
+                  );
+                }),
               ],
             ),
             bottom: PreferredSize(
@@ -70,85 +105,110 @@ class RecommendedFoodDetails extends StatelessWidget {
                 margin: EdgeInsets.symmetric(
                     horizontal: Dimensions.width20,
                     vertical: Dimensions.height10),
-                child: ExandableTextWidget(text: product.description!),
+                // child: ExandableTextWidget(text: product.description!),
+                child: ExandableTextWidget(
+                    text:
+                        'sdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdj sdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdj sdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdj sdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdj'),
               ),
             ]),
           ),
         ],
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.width20 * 2.5,
-                vertical: Dimensions.height15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppIcon(
-                    iconSize: Dimensions.font26,
-                    iconColor: Colors.white,
-                    backgroundColor: AppColors.mainColor,
-                    icon: Icons.remove),
-                BigText(
-                  text: "\$${product.price!} " "  X " " 0 ",
-                  color: AppColors.mainBlackColor,
-                  size: Dimensions.font26,
-                ),
-                AppIcon(
-                    iconSize: Dimensions.font26,
-                    iconColor: Colors.white,
-                    backgroundColor: AppColors.mainColor,
-                    icon: Icons.add),
-              ],
-            ),
-          ),
-          Container(
-            height: Dimensions.pageViewTextContainer,
-            padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.width20, vertical: Dimensions.height30),
-            decoration: BoxDecoration(
-              color: AppColors.buttonBackgroundColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(Dimensions.radius20 * 2),
-                topRight: Radius.circular(Dimensions.radius20 * 2),
+      bottomNavigationBar:
+          GetBuilder<PopularProductController>(builder: (controller) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: Dimensions.width20 * 2.5,
+                  vertical: Dimensions.height15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      controller.setQuantity(false);
+                    },
+                    child: AppIcon(
+                        iconSize: Dimensions.font26,
+                        iconColor: Colors.white,
+                        backgroundColor: AppColors.mainColor,
+                        icon: Icons.remove),
+                  ),
+                  BigText(
+                    text: "\$${product.price!} "
+                        "  X "
+                        "${controller.inCartItem}",
+                    color: AppColors.mainBlackColor,
+                    size: Dimensions.font26,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      controller.setQuantity(true);
+                    },
+                    child: AppIcon(
+                        iconSize: Dimensions.font26,
+                        iconColor: Colors.white,
+                        backgroundColor: AppColors.mainColor,
+                        icon: Icons.add),
+                  ),
+                ],
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: EdgeInsets.symmetric(
+            Container(
+              height: Dimensions.pageViewTextContainer,
+              padding: EdgeInsets.symmetric(
+                  horizontal: Dimensions.width20,
+                  vertical: Dimensions.height30),
+              decoration: BoxDecoration(
+                color: AppColors.buttonBackgroundColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Dimensions.radius20 * 2),
+                  topRight: Radius.circular(Dimensions.radius20 * 2),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimensions.width20,
+                          vertical: Dimensions.height20),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white),
+                      child: Icon(
+                        Icons.favorite,
+                        color: AppColors.mainColor,
+                      )),
+                  GestureDetector(
+                    onTap: () {
+                      controller.addItem(product);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.width20,
-                        vertical: Dimensions.height20),
-                    decoration: BoxDecoration(
+                        vertical: Dimensions.height20,
+                      ),
+                      decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.circular(Dimensions.radius20),
-                        color: Colors.white),
-                    child: Icon(
-                      Icons.favorite,
-                      color: AppColors.mainColor,
-                    )),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.width20,
-                    vertical: Dimensions.height20,
+                        color: AppColors.mainColor,
+                      ),
+                      child: BigText(
+                        text: '\$${product.price!}  | Add to cart',
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius20),
-                    color: AppColors.mainColor,
-                  ),
-                  child: BigText(
-                    text: '\$${product.price!}  | Add to cart',
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 }
