@@ -10,6 +10,7 @@ class RecommendProductController extends GetxController {
   List<dynamic> get recommendProductList => _recommendProductList;
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
+
   Future<void> getRecommendProductList() async {
     Response response = await recommendProductRepo.getRecommendProductList();
     if (response.statusCode == 200) {
