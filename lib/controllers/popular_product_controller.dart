@@ -1,6 +1,7 @@
 import 'package:dash/controllers/cart_controller.dart';
 import 'package:dash/data/repository/popular_product_repo.dart';
-import 'package:dash/models/product.dart';
+import 'package:dash/models/cart_model.dart';
+import 'package:dash/models/product_model.dart';
 import 'package:dash/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -83,5 +84,9 @@ class PopularProductController extends GetxController {
 
   int get totalItems {
     return _cart.totalItems;
+  }
+
+  List<CartModel> get getItems {
+    return _cart.getItems;
   }
 }

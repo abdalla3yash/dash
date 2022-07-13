@@ -1,5 +1,7 @@
 import 'package:dash/controllers/popular_product_controller.dart';
 import 'package:dash/controllers/recommend_product_controller.dart';
+import 'package:dash/pages/cart/cart_page.dart';
+import 'package:dash/routes/route_helper.dart';
 import 'package:dash/utils/app_constant.dart';
 import 'package:dash/utils/colors.dart';
 import 'package:dash/utils/dimensions.dart';
@@ -13,8 +15,10 @@ import '../../controllers/cart_controller.dart';
 
 class RecommendedFoodDetails extends StatelessWidget {
   final int pageId;
+  final String page;
 
-  const RecommendedFoodDetails({super.key, required this.pageId});
+  const RecommendedFoodDetails(
+      {super.key, required this.pageId, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -34,38 +38,43 @@ class RecommendedFoodDetails extends StatelessWidget {
               children: [
                 GestureDetector(
                     onTap: () {
-                      Get.back();
+                      Get.offAllNamed(RouteHelper.getInitial());
                     },
                     child: AppIcon(icon: Icons.clear)),
                 GetBuilder<PopularProductController>(builder: (controller) {
-                  return Stack(
-                    children: [
-                      AppIcon(icon: Icons.shopping_cart_outlined),
-                      Get.find<PopularProductController>().totalItems >= 1
-                          ? Positioned(
-                              right: 0,
-                              top: 0,
-                              child: AppIcon(
-                                icon: Icons.circle,
-                                size: 20,
-                                iconColor: Colors.transparent,
-                                backgroundColor: AppColors.mainColor,
-                              ),
-                            )
-                          : Container(),
-                      Get.find<PopularProductController>().totalItems >= 1
-                          ? Positioned(
-                              right: 5,
-                              top: 5,
-                              child: BigText(
-                                text: Get.find<PopularProductController>()
-                                    .totalItems
-                                    .toString(),
-                                size: 12,
-                                color: Colors.white,
-                              ))
-                          : Container(),
-                    ],
+                  return GestureDetector(
+                    onTap: () {
+                      Get.toNamed(RouteHelper.getCartPage());
+                    },
+                    child: Stack(
+                      children: [
+                        AppIcon(icon: Icons.shopping_cart_outlined),
+                        Get.find<PopularProductController>().totalItems >= 1
+                            ? Positioned(
+                                right: 0,
+                                top: 0,
+                                child: AppIcon(
+                                  icon: Icons.circle,
+                                  size: 20,
+                                  iconColor: Colors.transparent,
+                                  backgroundColor: AppColors.mainColor,
+                                ),
+                              )
+                            : Container(),
+                        Get.find<PopularProductController>().totalItems >= 1
+                            ? Positioned(
+                                right: 5,
+                                top: 5,
+                                child: BigText(
+                                  text: Get.find<PopularProductController>()
+                                      .totalItems
+                                      .toString(),
+                                  size: 12,
+                                  color: Colors.white,
+                                ))
+                            : Container(),
+                      ],
+                    ),
                   );
                 }),
               ],
@@ -106,9 +115,7 @@ class RecommendedFoodDetails extends StatelessWidget {
                     horizontal: Dimensions.width20,
                     vertical: Dimensions.height10),
                 // child: ExandableTextWidget(text: product.description!),
-                child: ExandableTextWidget(
-                    text:
-                        'sdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdj sdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdj sdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdj sdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdjsdfsdajb jsdal vjh adsvusvd vusayd vavhjas dvc dsnba cyuds hb sdahg cbsd cvdshkkv bsd cuhsd vcds jacbdsja vcvjhds cjhha dsvcbbds vcvsadjv sauyd bjh vcusavdcbsa dvucy ajc vsajkk vcksj avcmsd agc jsvadluic vads,j vcjas dvcsa dvkcj asvdj'),
+                child: ExandableTextWidget(text: product.description!),
               ),
             ]),
           ),

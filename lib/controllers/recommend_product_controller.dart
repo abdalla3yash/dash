@@ -1,6 +1,6 @@
 import 'package:dash/data/repository/popular_product_repo.dart';
 import 'package:dash/data/repository/recommend_product_repo.dart';
-import 'package:dash/models/product.dart';
+import 'package:dash/models/product_model.dart';
 import 'package:get/get.dart';
 
 class RecommendProductController extends GetxController {
