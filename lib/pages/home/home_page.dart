@@ -1,3 +1,4 @@
+import 'package:dash/pages/cart/cart_history.dart';
 import 'package:dash/pages/home/main_food_page.dart';
 import 'package:dash/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,9 +28,7 @@ class _HomePageState extends State<HomePage> {
     const Center(
       child: Text("Next Page"),
     ),
-    const Center(
-      child: Text("Next Page 2"),
-    ),
+    CartHistory(),
     const Center(
       child: Text("Next Page 3 "),
     ),

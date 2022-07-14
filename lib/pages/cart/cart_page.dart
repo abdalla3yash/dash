@@ -256,7 +256,9 @@ class CartPage extends StatelessWidget {
                     text: " ${controller.totalAmount.toString()} \$",
                   )),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  controller.addToHistory();
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.width20,
