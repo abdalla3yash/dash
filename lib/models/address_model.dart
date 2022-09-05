@@ -1,4 +1,3 @@
-
 class AddressModel {
   late int? _id;
   late String? _addressType,
@@ -28,6 +27,8 @@ class AddressModel {
   String? get addressType => _addressType;
   String? get contentPersonName => _contentPersonName;
   String? get contentPersonNumber => _contentPersonNumber;
+  String? get latitude => _latitude;
+  String? get longitude => _longitude;
 
   AddressModel.fromJson(Map<String, dynamic> json) {
     _id = json["id"];

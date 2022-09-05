@@ -1,6 +1,7 @@
 import 'package:dash/base/no_data_page.dart';
 import 'package:dash/controllers/auth_controller.dart';
 import 'package:dash/controllers/cart_controller.dart';
+import 'package:dash/controllers/location_controller.dart';
 import 'package:dash/controllers/popular_product_controller.dart';
 import 'package:dash/controllers/recommend_product_controller.dart';
 import 'package:dash/routes/route_helper.dart';
@@ -267,7 +268,13 @@ class CartPage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         if (Get.find<AuthController>().userLoggedIn()) {
-                          controller.addToHistory();
+                          if (Get.find<LocationController>()
+                              .addressList
+                              .isEmpty) {
+                            Get.toNamed(RouteHelper.getAddressPage());
+                          }
+                          // controller.addToHistory();
+
                         } else {
                           Get.toNamed(RouteHelper.getSignInPage());
                         }

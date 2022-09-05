@@ -1,127 +1,95 @@
-// import 'package:dash/base/custom_loader.dart';
-// import 'package:dash/utils/colors.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_map/flutter_map.dart';
-// import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
-// import 'package:latlng/latlng.dart';
+import 'package:dash/controllers/auth_controller.dart';
+import 'package:dash/controllers/location_controller.dart';
+import 'package:dash/controllers/user_controller.dart';
+import 'package:dash/utils/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-// class Mapp extends StatefulWidget {
-//   const Mapp({Key? key}) : super(key: key);
+class AddAddressPage extends StatefulWidget {
+  const AddAddressPage({super.key});
 
-//   @override
-//   State<Mapp> createState() => _MappState();
-// }
+  @override
+  State<AddAddressPage> createState() => _AddAddressPageState();
+}
 
-// class _MappState extends State<Mapp> {
-//   // MapController mapController = MapController(
-//   //   initPosition: GeoPoint(latitude: 30.0341916, longitude: 31.2371648),
-//   // );
-//   TextEditingController _contentPersonName = TextEditingController();
-//   TextEditingController _contentPersonNumber = TextEditingController();
-//   late bool _isLogged;
+class _AddAddressPageState extends State<AddAddressPage> {
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _contactPersonName = TextEditingController();
+  final TextEditingController _contactPersonNumber = TextEditingController();
+  late bool isLogged;
+  CameraPosition _cameraPosition =
+      const CameraPosition(target: LatLng(30.0444, 31.2357), zoom: 17);
 
-//   @override
-//   void dispose() {
-//     super.dispose();
-//     // mapController.dispose();
-//   }
+  late LatLng _initialPosition = const LatLng(30.0444, 31.2357);
 
-//   final PopupController _popupController = PopupController();
-//   MapController _mapController = MapController();
-//   double _zoom = 7;
-//   List<LatLng> _latLngList = [
-//     LatLng(13, 77.5),
-//     LatLng(13.02, 77.51),
-//     LatLng(13.05, 77.53),
-//     LatLng(13.055, 77.54),
-//     LatLng(13.059, 77.55),
-//     LatLng(13.07, 77.55),
-//     LatLng(13.1, 77.5342),
-//     LatLng(13.12, 77.51),
-//     LatLng(13.015, 77.53),
-//     LatLng(13.155, 77.54),
-//     LatLng(13.159, 77.55),
-//     LatLng(13.17, 77.55),
-//   ];
-//   List<Marker> _markers = [];
+  @override
+  void initState() {
+    super.initState();
+    isLogged = Get.find<AuthController>().userLoggedIn();
+    if (isLogged
+        //  && Get.find<UserController>().userModel == null
+        ) {
+      Get.find<UserController>().getUserInfo();
+    }
+    if (Get.find<LocationController>().addressList.isNotEmpty) {
+      _cameraPosition = CameraPosition(
+        target: LatLng(
+          double.parse(Get.find<LocationController>().getAddress["latitude"]),
+          double.parse(Get.find<LocationController>().getAddress["langitude"]),
+        ),
+      );
+      _initialPosition = LatLng(
+        double.parse(Get.find<LocationController>().getAddress["latitude"]),
+        double.parse(Get.find<LocationController>().getAddress["langitude"]),
+      );
+    }
+  }
 
-//   @override
-//   void initState() {
-//     _markers = _latLngList
-//         .map((point) => Marker(
-//               point: point,
-//               width: 60,
-//               height: 60,
-//               builder: (context) => Icon(
-//                 Icons.pin_drop,
-//                 size: 60,
-//                 color: Colors.blueAccent,
-//               ),
-//             ))
-//         .toList();
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: AppColors.mainColor,
-//         title: const Text("Location"),
-//         centerTitle: true,
-//       ),
-//       body: FlutterMap(
-//         mapController: _mapController,
-//         options: MapOptions(
-//           // swPanBoundary: LatLng(13, 77.5),
-//           // nePanBoundary: LatLng(13.07001, 77.58),
-//           center: _latLngList[0],
-//           bounds: LatLngBounds.fromPoints(_latLngList),
-//           zoom: _zoom,
-//           plugins: [
-//             MarkerClusterPlugin(),
-//           ],
-//           onTap: (_) => _popupController.hidePopup(),
-//         ),
-//         layers: [
-//           TileLayerOptions(
-//             minZoom: 2,
-//             maxZoom: 18,
-//             backgroundColor: Colors.black,
-//             // errorImage: ,
-//             urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-//             subdomains: ['a', 'b', 'c'],
-//           ),
-//           MarkerClusterLayerOptions(
-//             maxClusterRadius: 190,
-//             disableClusteringAtZoom: 16,
-//             size: Size(50, 50),
-//             fitBoundsOptions: FitBoundsOptions(
-//               padding: EdgeInsets.all(50),
-//             ),
-//             markers: _markers,
-//             polygonOptions: PolygonOptions(
-//                 borderColor: Colors.blueAccent,
-//                 color: Colors.black12,
-//                 borderStrokeWidth: 3),
-//             popupOptions: PopupOptions(
-//                 popupSnap: PopupSnap.top,
-//                 popupController: _popupController,
-//                 popupBuilder: (_, marker) => Container(
-//                       color: Colors.amberAccent,
-//                       child: Text('Popup'),
-//                     )),
-//             builder: (context, markers) {
-//               return Container(
-//                 alignment: Alignment.center,
-//                 decoration:
-//                     BoxDecoration(color: Colors.orange, shape: BoxShape.circle),
-//                 child: Text('${markers.length}'),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("Address Page"),
+          backgroundColor: AppColors.mainColor,
+        ),
+        body: GetBuilder<LocationController>(
+          builder: (locationController) {
+            return Column(
+              children: [
+                Container(
+                  height: 150,
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.only(left: 5, right: 5, top: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      width: 2,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  child: Stack(children: [
+                    GoogleMap(
+                        initialCameraPosition:
+                            CameraPosition(target: _initialPosition, zoom: 17),
+                        zoomControlsEnabled: false,
+                        compassEnabled: false,
+                        indoorViewEnabled: true,
+                        mapToolbarEnabled: true,
+                        onCameraIdle: () {
+                          locationController.updatePosition(
+                              _cameraPosition, true);
+                        },
+                        onCameraMove: (((position) =>
+                            _cameraPosition = position)),
+                        onMapCreated: (GoogleMapController controller) {
+                          locationController.setMapController(controller);
+                        }),
+                  ]),
+                ),
+              ],
+            );
+          },
+        ));
+  }
+}
